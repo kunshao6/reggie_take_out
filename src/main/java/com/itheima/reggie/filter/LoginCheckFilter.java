@@ -33,7 +33,9 @@ public class LoginCheckFilter implements Filter {
                 "/employee/logout",
                 "/backend/**",
                 "/front/**",
-                "/common/**"
+                "/common/**",
+                "/user/sendMsg",
+                "/user/login"
 
         };
         //判断本次匹配是否需要处理
@@ -50,6 +52,15 @@ public class LoginCheckFilter implements Filter {
             //获取用户id，用于公共字段自动填充的操作使用
             Long empId = (Long) request.getSession().getAttribute("employee");
             BaseContext.setCurrentId(empId);
+            filterChain.doFilter(request,response);
+            return;
+        }
+        //判断登录状态，如果已登录，则放行
+        if (request.getSession().getAttribute("user")!=null){
+            log.info("用户已登录，id为: {}",request.getSession().getAttribute("user"));
+            //获取用户id，用于公共字段自动填充的操作使用
+            Long userId = (Long) request.getSession().getAttribute("user");
+            BaseContext.setCurrentId(userId);
             filterChain.doFilter(request,response);
             return;
         }
