@@ -12,6 +12,7 @@ spring:
   redis:
     host: 192.168.255.128
     port: 6379
+    password: 123456
     database: 0
 mybatis-plus:
   configuration:
@@ -23,4 +24,4 @@ mybatis-plus:
       id-type: ASSIGN_ID
 
 reggie:
-  path: D:\
+  path: D:\reggie-picture
